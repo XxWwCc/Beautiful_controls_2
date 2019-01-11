@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login">
+
+    <RelativeLayout
+        android:layout_width="@dimen/login_width"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:background="@drawable/radius_hand_transoarent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@drawable/bg_white_bottom_radius"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="48dp"
+            android:paddingRight="48dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:gravity="center_horizontal"
+                android:text="@string/tv_system_name"
+                android:textColor="@color/colorGreen"
+                android:textSize="44sp" />
+
+            <TextView
+                android:id="@+id/et_account"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:drawableLeft="@drawable/icon_account"
+                android:drawableStart="@drawable/icon_account"
+                android:gravity="center_vertical"
+                android:hint="@string/et_hint_account"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorHint"
+                android:textSize="@dimen/textSize" />
+
+            <View
+                style="@style/LineHorizontal" />
+
+            <TextView
+                android:id="@+id/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:drawableLeft="@drawable/icon_password"
+                android:drawableStart="@drawable/icon_password"
+                android:gravity="center_vertical"
+                android:hint="@string/et_hint_password"
+                android:inputType="textPassword"
+                android:textColor="@color/colorText"
+                android:textColorHint="@color/colorHint"
+                android:textSize="@dimen/textSize" />
+
+            <View
+                style="@style/LineHorizontal" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp">
+
+                <CheckBox
+                    android:id="@+id/cb_remember_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:checked="false"
+                    android:textColor="@color/colorText"
+                    android:textSize="@dimen/textSize"
+                    android:text="@string/cb_remember_password"/>
+
+                <TextView
+                    android:id="@+id/btn_forget_password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="@string/btn_forrget_login"
+                    android:textColor="@drawable/selector_green_click"
+                    android:textSize="@dimen/textSize"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginBottom="32dp"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/btn_radius_selector"
+                android:text="@string/btn_login"
+                android:textSize="@dimen/btnTextSize" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

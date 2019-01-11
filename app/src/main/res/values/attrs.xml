@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--顶部导航自定义属性-->
+    <declare-styleable name="CustomBar">
+        <!--是否显示返回图标-->
+        <attr name="is_back" format="boolean"/>
+        <!--返回图标-->
+        <attr name="back_icon" format="reference"/>
+        <!--是否显示标题文字-->
+        <attr name="is_title" format="boolean"/>
+        <!--标题文字-->
+        <attr name="title_text" format="reference"/>
+        <!--标题文字颜色-->
+        <attr name="title_color" format="color"/>
+        <!--背景颜色-->
+        <attr name="bar_background" format="color"/>
+        <!--是否显示右按钮-->
+        <attr name="is_right_btn" format="boolean"/>
+        <!--右按钮文字-->
+        <attr name="right_btn" format="reference"/>
+        <!--右按钮文字颜色-->
+        <attr name="right_btn_color" format="color"/>
+    </declare-styleable>
+</resources>

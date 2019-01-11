@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="textColorPrimary">#000000</color>
+    <color name="colorWhite">#ffffff</color>
+    <color name="colorBlack">#000000</color>
+    <color name="halfTransparent">#80ffffff</color>
+    <color name="colorGreen">#4CC08A</color>
+    <color name="colorText">#656565</color>
+    <color name="colorHint">#989898</color>
+
+    <!--按钮显示颜色-->
+    <color name="btnNormal">#27C54E</color>
+    <!--按钮点击颜色-->
+    <color name="btnPressed">#1B8D37</color>
+    <!--按钮不可点击颜色-->
+    <color name="btnError">#E5E5E5</color>
+</resources>

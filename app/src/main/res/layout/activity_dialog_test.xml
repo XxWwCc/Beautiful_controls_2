@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:toolbar="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.qcloud.myapplication.weight.CustomToolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        toolbar:title_color="@color/colorWhite"
+        toolbar:is_title="true"
+        toolbar:title_text="@string/title_animation"/>
+
+    <TextView
+        android:id="@+id/tv_load_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25sp"/>
+</LinearLayout>

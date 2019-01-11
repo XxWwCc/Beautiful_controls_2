@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single"/>
+
+    <item android:id="@+id/nav_account"
+          android:icon="@mipmap/icon_account"
+          android:title="@string/account" />
+    <item android:id="@+id/nav_phone"
+          android:icon="@mipmap/icon_phone"
+          android:title="@string/phone" />
+    <item android:id="@+id/nav_telephone"
+          android:icon="@mipmap/icon_telephone"
+          android:title="@string/telephone" />
+    <item android:id="@+id/nav_time"
+          android:icon="@mipmap/icon_time"
+          android:title="@string/time" />
+    <item android:id="@+id/nav_setting"
+          android:icon="@mipmap/icon_setting"
+          android:title="@string/setting" />
+
+</menu>

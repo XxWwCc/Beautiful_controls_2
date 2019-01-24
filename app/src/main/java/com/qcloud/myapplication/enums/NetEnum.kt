@@ -7,4 +7,5 @@ package com.qcloud.myapplication.enums
  */
 object NetEnum {
     const val TOKEN = "TOKEN"
+    const val IS_DEBUG = true
 }

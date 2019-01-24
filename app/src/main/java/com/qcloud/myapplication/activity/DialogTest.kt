@@ -9,6 +9,8 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.transition.Explode
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import com.qcloud.myapplication.R
 import com.qcloud.myapplication.weight.LoadingDialog
 import io.reactivex.Observable
@@ -87,6 +89,26 @@ class DialogTest : AppCompatActivity() {
      * */
     private fun fillZero(number: Int) : String {
         return if (number < 10) "0" + number.toString() else number.toString()
+    }
+
+    /**
+     * 获取屏幕宽度
+     * */
+    private fun getScreenWidth() : Int {
+        val dm = DisplayMetrics()
+        val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        wm.defaultDisplay.getMetrics(dm)
+        return dm.widthPixels
+    }
+
+    /**
+     * 获取屏幕高度
+     * */
+    private fun getScreenHeight() : Int {
+        val dm = DisplayMetrics()
+        val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        wm.defaultDisplay.getMetrics(dm)
+        return dm.heightPixels
     }
 
     companion object {

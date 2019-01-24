@@ -1,47 +1,52 @@
 package com.qcloud.myapplication.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Color
 import android.net.Uri
 import com.qcloud.myapplication.adapter.FruitAdapter
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
+import android.support.v4.content.FileProvider
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.GridLayoutManager
-import android.telephony.SmsManager
 import android.transition.Slide
-import android.util.DisplayMetrics
-import android.view.Gravity
+import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import com.qcloud.myapplication.beans.FruitBean
 import com.qcloud.myapplication.R
 import com.qcloud.myapplication.weight.CustomToolbar
-import com.qcloud.myapplication.weight.PermissionManager
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.io.File
-import java.util.*
+import java.io.FileNotFoundException
+import java.io.IOException
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
     private val fruits: MutableList<FruitBean> = ArrayList()
+    private var imageUri: Uri? = null
+    private var headLayout: View? = null
+    private var headImage: CircleImageView? = null
 
     private val code = 1
+    private val TAKE_PHOTO = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +61,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
+        headLayout = nav_view.inflateHeaderView(R.layout.nav_header)
+        headImage = headLayout?.findViewById(R.id.civ_head_image)
         custom_toolbar.onBtnClickListener = object : CustomToolbar.OnBtnClickListener {
             override fun onBtnClick(view: View, value: String?) {
                 when (view.id) {
@@ -75,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                     GetContactsActivity.openActivity(this)
                 }
                 R.id.nav_telephone -> {
-                    getDate()
+
                 }
                 R.id.nav_time -> {
                     DialogTest.openActivity(this)
@@ -84,6 +91,16 @@ class MainActivity : AppCompatActivity() {
             drawer_layout.closeDrawers()
             return@setNavigationItemSelectedListener true
         }
+
+        headImage?.setOnClickListener{
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                takePhoto()
+            } else {
+                val intent = Intent("android.media.action.IMAGE_CAPTURE")
+                startActivityForResult(intent, TAKE_PHOTO)
+            }
+        }
+
         fab.setOnClickListener{
             view ->  Snackbar.make(view, "Send Notice", Snackbar.LENGTH_SHORT)
                             .setAction("Yes", View.OnClickListener {
@@ -102,8 +119,41 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun takePhoto() {
+        val outputImage = File(externalCacheDir, "output_image.jpg")
+        try {
+            if (outputImage.exists()) {
+                outputImage.delete()
+            }
+            outputImage.createNewFile()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        imageUri = FileProvider.getUriForFile(this, "com.qcloud.myapplication.FileProvider", outputImage)
+        val intent = Intent("android.media.action.IMAGE_CAPTURE")
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+        startActivityForResult(intent, TAKE_PHOTO)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                TAKE_PHOTO -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri!!))
+                        headImage?.setImageBitmap(bitmap)
+                    } else {
+                        val bitmap = data?.extras?.get("data") as Bitmap
+                        headImage?.setImageBitmap(bitmap)
+                    }
+                }
+            }
+        }
+    }
+
     /**
-     * 检查权限
+     * 检查发送短信权限
      * */
     private fun checkPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -148,6 +198,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * 去设置弹窗
+     * */
     private fun requestToSetting() {
         val record = AlertDialog.Builder(this)
             .setNegativeButton("取消"){_,_ -> }
@@ -193,53 +246,6 @@ class MainActivity : AppCompatActivity() {
             .setPriority(NotificationCompat.PRIORITY_MAX)
             .build()
         manager.notify(1,notification)
-    }
-
-    /**
-     * 选择时间弹窗
-     * */
-    private fun getDate() {
-        var date = ""
-        val calendar = Calendar.getInstance()
-        val year = calendar.get(Calendar.YEAR)
-        val month = calendar.get(Calendar.MONTH)+1
-        val day =  calendar.get(Calendar.DAY_OF_MONTH)
-        val dialog = DatePickerDialog(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT,
-            DatePickerDialog.OnDateSetListener { _, year, month, day ->
-                date = "$year-${fillZero(month + 1)}-${fillZero(day)}"
-                Toast.makeText(this, date, Toast.LENGTH_LONG).show()
-            }, year, month, day)
-        dialog.show()
-        val window = dialog.window
-        window?.setLayout(getScreenWidth() - 40, WindowManager.LayoutParams.WRAP_CONTENT)
-        window?.setGravity(Gravity.CENTER)
-    }
-
-    /**
-     * 给数字1~9前面添加 0
-     * */
-    private fun fillZero(number: Int) : String {
-        return if (number < 10) "0" + number.toString() else number.toString()
-    }
-
-    /**
-     * 获取屏幕宽度
-     * */
-    private fun getScreenWidth() : Int {
-        val dm = DisplayMetrics()
-        val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        wm.defaultDisplay.getMetrics(dm)
-        return dm.widthPixels
-    }
-
-    /**
-     * 获取屏幕高度
-     * */
-    private fun getScreenHeight() : Int {
-        val dm = DisplayMetrics()
-        val wm = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        wm.defaultDisplay.getMetrics(dm)
-        return dm.heightPixels
     }
 
     private fun refreshFruits() {

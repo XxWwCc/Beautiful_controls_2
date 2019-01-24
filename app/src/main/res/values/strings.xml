@@ -1,21 +1,15 @@
 <resources>
     <string name="app_name">SmokerApp</string>
 
-    <string name="btn_confirm" translatable="false">确定</string>
-    <string name="btn_next" translatable="false">Next</string>
     <string name="title_banner" translatable="false">轮播</string>
     <string name="title_animation" translatable="false">加载动画弹窗</string>
-    <string name="tv_system_name" translatable="false">农资溯源管理系统</string>
-    <string name="et_hint_account" translatable="false">请输入您的账号</string>
-    <string name="et_hint_password" translatable="false">请输入您的密码</string>
-    <string name="et_hint_original_password" translatable="false">请输入原来的密码</string>
-    <string name="et_hint_phone" translatable="false">请输入手机号</string>
-    <string name="et_hint_code" translatable="false">请输入验证码</string>
-    <string name="cb_remember_password" translatable="false">记住密码</string>
-    <string name="btn_forrget_login" translatable="false">忘记密码</string>
-    <string name="btn_updata_password" translatable="false">修改密码</string>
-    <string name="btn_login" translatable="false">登录</string>
     <string name="title_search" translatable="false">扫码搜索</string>
+    <string name="title_get_contacts" translatable="false">获取电话簿测试</string>
+
+    <string name="btn_confirm" translatable="false">确定</string>
+    <string name="btn_next" translatable="false">Next</string>
+    <string name="btn_get_contacts" translatable="false">获取电话簿</string>
+
     <string name="account" translatable="false">Account</string>
     <string name="phone" translatable="false">Phone</string>
     <string name="telephone" translatable="false">Telephone</string>

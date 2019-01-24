@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             slide.duration = 500
             window.exitTransition = slide
         }
-
         initView()
         initFruits()
     }
@@ -73,13 +72,13 @@ class MainActivity : AppCompatActivity() {
                     WebViewActivity.openActivity(this)
                 }
                 R.id.nav_phone -> {
-                    DialogTest.openActivity(this)
+                    GetContactsActivity.openActivity(this)
                 }
                 R.id.nav_telephone -> {
                     getDate()
                 }
                 R.id.nav_time -> {
-
+                    DialogTest.openActivity(this)
                 }
             }
             drawer_layout.closeDrawers()

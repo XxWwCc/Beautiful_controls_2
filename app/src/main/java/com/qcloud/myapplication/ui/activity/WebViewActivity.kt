@@ -1,4 +1,4 @@
-package com.qcloud.myapplication.activity
+package com.qcloud.myapplication.ui.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.activity_webview.*
 
 
 /**
- * Description：
+ * Description：webview
  * author：Smoker
  * 2018/12/11 15:45
  */

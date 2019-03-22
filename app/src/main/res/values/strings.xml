@@ -10,9 +10,9 @@
     <string name="btn_next" translatable="false">Next</string>
     <string name="btn_get_contacts" translatable="false">获取电话簿</string>
 
-    <string name="account" translatable="false">Account</string>
-    <string name="phone" translatable="false">Phone</string>
+    <string name="account" translatable="false">轮播图</string>
+    <string name="phone" translatable="false">联系人</string>
     <string name="telephone" translatable="false">Telephone</string>
-    <string name="time" translatable="false">Time</string>
-    <string name="setting" translatable="false">Setting</string>
+    <string name="time" translatable="false">加载弹窗</string>
+    <string name="setting" translatable="false">网页</string>
 </resources>

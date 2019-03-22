@@ -1,4 +1,4 @@
-package com.qcloud.myapplication.activity
+package com.qcloud.myapplication.ui.activity
 
 import android.app.Activity
 import android.app.ActivityOptions

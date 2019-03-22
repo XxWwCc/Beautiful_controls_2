@@ -11,14 +11,14 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
-        android:name=".activity.BaseApplication"
+        android:name="com.qcloud.myapplication.ui.activity.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.MainActivity">
+        <activity android:name="com.qcloud.myapplication.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -36,19 +36,19 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name=".activity.TitleTestActivity"
+        <activity android:name="com.qcloud.myapplication.ui.activity.TitleTestActivity"
                   android:theme="@style/TitleActivityTheme"/>
 
-        <activity android:name=".activity.BannerTestActivity"
+        <activity android:name="com.qcloud.myapplication.ui.activity.BannerTestActivity"
             android:label="@string/title_banner"/>
 
-        <activity android:name=".activity.WebViewActivity"
+        <activity android:name="com.qcloud.myapplication.ui.activity.WebViewActivity"
             android:label="@string/title_search"/>
 
-        <activity android:name=".activity.DialogTest"
+        <activity android:name="com.qcloud.myapplication.ui.activity.DialogTest"
             android:label="@string/title_animation"/>
 
-        <activity android:name=".activity.GetContactsActivity"
+        <activity android:name="com.qcloud.myapplication.ui.activity.GetContactsActivity"
             android:label="@string/title_get_contacts"/>
     </application>
 

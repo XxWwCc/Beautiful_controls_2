@@ -1,4 +1,4 @@
-package com.qcloud.myapplication.activity
+package com.qcloud.myapplication.ui.activity
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -23,9 +23,8 @@ import com.squareup.picasso.Picasso
 import jp.wasabeef.picasso.transformations.CropCircleTransformation
 import java.util.*
 
-
 /**
- * Description：
+ * Description：加载弹窗
  * author：Smoker
  * 2018/12/19 11:15
  */

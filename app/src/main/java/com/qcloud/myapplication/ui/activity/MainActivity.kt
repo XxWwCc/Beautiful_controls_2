@@ -1,7 +1,6 @@
-package com.qcloud.myapplication.activity
+package com.qcloud.myapplication.ui.activity
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -24,21 +23,21 @@ import android.support.v4.content.FileProvider
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.GridLayoutManager
 import android.transition.Slide
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.qcloud.myapplication.beans.FruitBean
 import com.qcloud.myapplication.R
+import com.qcloud.myapplication.base.BaseActivity
+import com.qcloud.myapplication.ui.presenter.impl.MainPresenterImpl
+import com.qcloud.myapplication.ui.view.IMainView
 import com.qcloud.myapplication.weight.CustomToolbar
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
-import timber.log.Timber
 import java.io.File
-import java.io.FileNotFoundException
 import java.io.IOException
 import kotlin.collections.ArrayList
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
 
     private val fruits: MutableList<FruitBean> = ArrayList()
     private var imageUri: Uri? = null
@@ -48,14 +47,14 @@ class MainActivity : AppCompatActivity() {
     private val code = 1
     private val TAKE_PHOTO = 1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val slide = Slide()
-            slide.duration = 500
-            window.exitTransition = slide
-        }
+    override val layoutId: Int
+        get() = R.layout.activity_main
+
+    override fun initPresenter(): MainPresenterImpl? {
+        return MainPresenterImpl()
+    }
+
+    override fun initViewAndData() {
         initView()
         initFruits()
     }
@@ -272,6 +271,16 @@ class MainActivity : AppCompatActivity() {
             bean.name = "Apple"
             bean.image = R.mipmap.smoker
             fruits.add(bean)
+        }
+    }
+
+    override fun loadError(message: String, isShow: Boolean) {
+
+    }
+
+    companion object {
+        fun openActivity(context: Context) {
+            context.startActivity(Intent(context, MainActivity::class.java))
         }
     }
 }

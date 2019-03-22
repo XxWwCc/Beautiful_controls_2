@@ -27,6 +27,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    implementation 'org.greenrobot:eventbus:3.1.1'
+
     //加载图片的另一框架
     implementation 'com.squareup.picasso:picasso:2.5.2'
     //配合picasso使用的图片转换

@@ -12,7 +12,7 @@ import android.widget.TextView
 import com.qcloud.myapplication.beans.FruitBean
 import com.bumptech.glide.Glide
 import com.qcloud.myapplication.R
-import com.qcloud.myapplication.activity.TitleTestActivity
+import com.qcloud.myapplication.ui.activity.TitleTestActivity
 
 /**
  * Description：

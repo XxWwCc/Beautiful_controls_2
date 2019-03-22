@@ -1,4 +1,4 @@
-package com.qcloud.myapplication.activity
+package com.qcloud.myapplication.ui.activity
 
 import android.app.Application
 import com.qcloud.myapplication.enums.NetEnum

@@ -10,6 +10,7 @@ import java.io.Serializable
 class FruitBean : Serializable {
     var name = ""
     var image = 0
+    var key = 0
 
     override fun toString(): String {
         return "FruitBean(name='$name', image='$image')"

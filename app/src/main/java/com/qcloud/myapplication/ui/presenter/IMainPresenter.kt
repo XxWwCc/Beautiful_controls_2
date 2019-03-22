@@ -6,4 +6,5 @@ package com.qcloud.myapplication.ui.presenter
  * 2019/3/22 14:29
  */
 interface IMainPresenter {
+    fun initList(step: Int = 0)
 }

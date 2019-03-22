@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import com.qcloud.myapplication.adapter.FruitAdapter
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
 import android.provider.MediaStore
 import android.provider.Settings
 import android.support.design.widget.Snackbar
@@ -22,17 +20,19 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.GridLayoutManager
-import android.transition.Slide
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Toast
 import com.qcloud.myapplication.beans.FruitBean
 import com.qcloud.myapplication.R
 import com.qcloud.myapplication.base.BaseActivity
+import com.qcloud.myapplication.enums.NavigationType
 import com.qcloud.myapplication.ui.presenter.impl.MainPresenterImpl
 import com.qcloud.myapplication.ui.view.IMainView
 import com.qcloud.myapplication.weight.CustomToolbar
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import kotlin.collections.ArrayList
@@ -43,6 +43,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
     private var imageUri: Uri? = null
     private var headLayout: View? = null
     private var headImage: CircleImageView? = null
+    private var mAdapter: FruitAdapter? = null
 
     private val code = 1
     private val TAKE_PHOTO = 1
@@ -56,7 +57,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
 
     override fun initViewAndData() {
         initView()
-        initFruits()
+        mPresenter?.initList()
     }
 
     private fun initView() {
@@ -71,13 +72,13 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
         }
         nav_view.setNavigationItemSelectedListener{
             when (it.itemId) {
-                R.id.nav_account -> {
+                R.id.nav_banner -> {
                     BannerTestActivity.openActivity(this)
                 }
-                R.id.nav_setting -> {
+                R.id.nav_web -> {
                     WebViewActivity.openActivity(this)
                 }
-                R.id.nav_phone -> {
+                R.id.nav_contacts -> {
                     GetContactsActivity.openActivity(this)
                 }
                 R.id.nav_telephone -> {
@@ -108,10 +109,29 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                             .show()
         }
 
-        val layoutManager = GridLayoutManager(this, 2)
-        list_fruit.layoutManager = layoutManager
-        val adapter = FruitAdapter(this, fruits)
-        list_fruit.adapter = adapter
+        list_fruit.layoutManager = GridLayoutManager(this, 2)
+        mAdapter = FruitAdapter(this)
+        list_fruit.adapter = mAdapter
+        mAdapter?.replaceList(fruits)
+        mAdapter?.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val bean = mAdapter!!.mList[position]
+            when (bean.key) {
+                0 -> {
+                    TitleTestActivity.openActivity(this@MainActivity, bean.name, bean.image)
+                }
+                NavigationType.TYPE_BAIDU -> {
+
+                }
+                NavigationType.TYPE_GAODE -> {
+
+                }
+                NavigationType.TYPE_TENXUN -> {
+
+                }
+            }
+        }
+
+
         swipe_refresh.setColorSchemeResources(R.color.colorPrimary)
         swipe_refresh.setOnRefreshListener {
             refreshFruits()
@@ -174,7 +194,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
     /**
      * 检查是否360系统手机
      * */
-    fun checkIs360Rom(): Boolean {
+    private fun checkIs360Rom(): Boolean {
         // fix issue https://github.com/zhaozepeng/FloatWindowPermission/issues/9
         return Build.MANUFACTURER.contains("QiKU") || Build.MANUFACTURER.contains("360")
     }
@@ -257,25 +277,31 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                 }
                 runOnUiThread{
                     kotlin.run {
-                        initFruits()
-                        swipe_refresh.isRefreshing = false
+                        mPresenter?.initList(1)
                     }
                 }
             }
         }).start()
     }
 
-    private fun initFruits() {
-        for(i in 0 until 50) {
-            val bean = FruitBean()
-            bean.name = "Apple"
-            bean.image = R.mipmap.smoker
-            fruits.add(bean)
+    override fun replaceList(list: List<FruitBean>) {
+        if (isRunning) {
+            swipe_refresh.isRefreshing = false
+            fruits.clear()
+            fruits.addAll(list)
+            mAdapter?.replaceList(list)
         }
     }
 
     override fun loadError(message: String, isShow: Boolean) {
+        if (isRunning) {
+            swipe_refresh.isRefreshing = false
+            if (isShow) {
 
+            } else {
+                Timber.e(message)
+            }
+        }
     }
 
     companion object {

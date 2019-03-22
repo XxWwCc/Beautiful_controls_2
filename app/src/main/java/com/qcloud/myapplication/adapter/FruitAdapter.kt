@@ -1,28 +1,30 @@
 package com.qcloud.myapplication.adapter
 
 import android.content.Context
-import android.content.Intent
+import android.support.annotation.NonNull
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import com.qcloud.myapplication.beans.FruitBean
 import com.bumptech.glide.Glide
 import com.qcloud.myapplication.R
-import com.qcloud.myapplication.ui.activity.TitleTestActivity
 
 /**
  * Description：
  * author：Smoker
  * 2018/12/3 17:45
  */
-class FruitAdapter(context: Context, list: List<FruitBean>) : RecyclerView.Adapter<FruitAdapter.ViewHolder>() {
+class FruitAdapter(context: Context) : RecyclerView.Adapter<FruitAdapter.ViewHolder>() {
 
     private val mContext = context
-    private val mList = list
+    val mList: ArrayList<FruitBean> = ArrayList()
+    var onItemClickListener: AdapterView.OnItemClickListener? = null
+    var onHolderClickListener: OnHolderClickListener<FruitBean>? = null
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val cardView = view.findViewById<CardView>(R.id.cardview)
@@ -44,12 +46,23 @@ class FruitAdapter(context: Context, list: List<FruitBean>) : RecyclerView.Adapt
         holder.fruitName.text = fruit.name
         Glide.with(mContext).load(fruit.image).into(holder.fruitImage)
         holder.cardView.setOnClickListener{
-            val bean = mList[position]
-            val intent = Intent(mContext, TitleTestActivity::class.java)
-            intent.putExtra(TitleTestActivity.FRUIT_NAME, bean.name)
-            intent.putExtra(TitleTestActivity.FRUIT_IMAGE_ID, bean.image)
-            mContext.startActivity(intent)
+            onItemClickListener?.onItemClick(null, it, position, holder.itemId)
         }
+    }
+
+    fun replaceList(list: List<FruitBean>?) {
+        mList.clear()
+        if (list != null) {
+            mList.addAll(list)
+        }
+        notifyDataSetChanged()
+    }
+
+    /**
+     * 控件点击监听
+     * */
+    interface OnHolderClickListener<in T> {
+        fun onHolderClick(@NonNull view: View, t: T, position: Int)
     }
 
 }

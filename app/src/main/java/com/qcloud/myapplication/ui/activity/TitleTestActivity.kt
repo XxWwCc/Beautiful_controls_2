@@ -18,20 +18,20 @@ import java.lang.StringBuilder
 class TitleTestActivity : AppCompatActivity() {
 
     private var fruitName = ""
-    private var fruitImageId = 0
+    private var fruitImage = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_title_test)
         fruitName = intent.getStringExtra(FRUIT_NAME)
-        fruitImageId = intent.getIntExtra(FRUIT_IMAGE_ID, 0)
+        fruitImage = intent.getStringExtra(FRUIT_IMAGE)
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
         collapsing_toolbar.title = fruitName
-        Glide.with(this).load(fruitImageId).into(iv_fruit_image)
+        Glide.with(this).load(fruitImage).into(iv_fruit_image)
         val fruitContent = generateFruitContent(fruitName)
         tv_fruit_content.text = fruitContent
 
@@ -61,10 +61,13 @@ class TitleTestActivity : AppCompatActivity() {
     companion object {
 
         val FRUIT_NAME = "fruit_name"
-        val FRUIT_IMAGE_ID = "fruit_image_id"
+        val FRUIT_IMAGE = "fruit_image"
 
-        fun openActivity(context: Context) {
-            context.startActivity(Intent(context, TitleTestActivity::class.java))
+        fun openActivity(context: Context, fruitName: String, fruitImage: String) {
+            val intent = Intent(context, TitleTestActivity::class.java)
+            intent.putExtra(FRUIT_NAME, fruitName)
+            intent.putExtra(FRUIT_IMAGE, fruitImage)
+            context.startActivity(intent)
         }
     }
 }

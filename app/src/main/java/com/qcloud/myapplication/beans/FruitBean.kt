@@ -9,7 +9,7 @@ import java.io.Serializable
  */
 class FruitBean : Serializable {
     var name = ""
-    var image = 0
+    var image = ""
     var key = 0
 
     override fun toString(): String {

@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single"/>
 
-    <item android:id="@+id/nav_account"
+    <item android:id="@+id/nav_banner"
           android:icon="@mipmap/icon_account"
           android:title="@string/account" />
-    <item android:id="@+id/nav_phone"
+    <item android:id="@+id/nav_contacts"
           android:icon="@mipmap/icon_phone"
           android:title="@string/phone" />
     <item android:id="@+id/nav_telephone"
@@ -14,7 +14,7 @@
     <item android:id="@+id/nav_time"
           android:icon="@mipmap/icon_time"
           android:title="@string/time" />
-    <item android:id="@+id/nav_setting"
+    <item android:id="@+id/nav_web"
           android:icon="@mipmap/icon_setting"
           android:title="@string/setting" />
 

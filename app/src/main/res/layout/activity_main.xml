@@ -17,7 +17,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <com.qcloud.myapplication.weight.CustomToolbar
+            <com.xwc.smokerapp.weight.CustomToolbar
                     android:id="@+id/custom_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/appbar_height"

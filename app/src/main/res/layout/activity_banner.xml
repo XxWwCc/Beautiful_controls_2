@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.qcloud.myapplication.weight.CustomToolbar
+        <com.xwc.smokerapp.weight.CustomToolbar
             android:layout_width="match_parent"
             android:layout_height="@dimen/appbar_height"
             toolbar:title_text="@string/title_banner"/>

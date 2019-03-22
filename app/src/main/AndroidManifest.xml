@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools" package="com.qcloud.myapplication">
+          xmlns:tools="http://schemas.android.com/tools" package="com.xwc.smokerapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,14 +11,14 @@
     <uses-permission android:name="android.permission.SEND_SMS"/>
 
     <application
-        android:name="com.qcloud.myapplication.ui.activity.BaseApplication"
+        android:name="com.xwc.smokerapp.ui.activity.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.qcloud.myapplication.ui.activity.MainActivity">
+        <activity android:name="com.xwc.smokerapp.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -27,7 +27,7 @@
         </activity>
 
         <provider
-            android:authorities="com.qcloud.myapplication.FileProvider"
+            android:authorities="com.xwc.smokerapp.FileProvider"
             android:name="android.support.v4.content.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -36,19 +36,19 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name="com.qcloud.myapplication.ui.activity.TitleTestActivity"
+        <activity android:name="com.xwc.smokerapp.ui.activity.TitleTestActivity"
                   android:theme="@style/TitleActivityTheme"/>
 
-        <activity android:name="com.qcloud.myapplication.ui.activity.BannerTestActivity"
+        <activity android:name="com.xwc.smokerapp.ui.activity.BannerTestActivity"
             android:label="@string/title_banner"/>
 
-        <activity android:name="com.qcloud.myapplication.ui.activity.WebViewActivity"
+        <activity android:name="com.xwc.smokerapp.ui.activity.WebViewActivity"
             android:label="@string/title_search"/>
 
-        <activity android:name="com.qcloud.myapplication.ui.activity.DialogTest"
+        <activity android:name="com.xwc.smokerapp.ui.activity.DialogTest"
             android:label="@string/title_animation"/>
 
-        <activity android:name="com.qcloud.myapplication.ui.activity.GetContactsActivity"
+        <activity android:name="com.xwc.smokerapp.ui.activity.GetContactsActivity"
             android:label="@string/title_get_contacts"/>
     </application>
 

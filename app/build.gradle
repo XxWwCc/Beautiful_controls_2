@@ -7,7 +7,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.qcloud.myapplication"
+        applicationId "com.xwc.smokerapp"
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
@@ -27,6 +27,10 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    //高德定位
+    implementation 'com.amap.api:location:4.5.0'
+
+    //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
 
     //加载图片的另一框架

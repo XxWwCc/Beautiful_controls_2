@@ -1,6 +1,7 @@
 package com.xwc.smokerapp.ui.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -23,6 +24,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
+import com.amap.api.location.AMapLocationClient
+import com.amap.api.location.AMapLocationListener
 import com.xwc.smokerapp.beans.FruitBean
 import com.xwc.smokerapp.R
 import com.xwc.smokerapp.base.BaseActivity
@@ -44,8 +47,12 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
     private var headLayout: View? = null
     private var headImage: CircleImageView? = null
     private var mAdapter: FruitAdapter? = null
+    private var longitude = ""
+    private var latitude = ""
 
-    private val code = 1
+    private var mAMapLocationClient: AMapLocationClient? = null
+
+    private val code = 1024
     private val TAKE_PHOTO = 1
 
     override val layoutId: Int
@@ -120,13 +127,25 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                     TitleTestActivity.openActivity(this@MainActivity, bean.name, bean.image)
                 }
                 NavigationType.TYPE_BAIDU -> {
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getPermission(NavigationType.TYPE_BAIDU)
+                    } else {
+                        getLocation(NavigationType.TYPE_BAIDU)
+                    }
                 }
                 NavigationType.TYPE_GAODE -> {
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getPermission(NavigationType.TYPE_GAODE)
+                    } else {
+                        getLocation(NavigationType.TYPE_GAODE)
+                    }
                 }
                 NavigationType.TYPE_TENXUN -> {
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        getPermission(NavigationType.TYPE_TENXUN)
+                    } else {
+                        getLocation(NavigationType.TYPE_TENXUN)
+                    }
                 }
             }
         }
@@ -135,6 +154,48 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
         swipe_refresh.setColorSchemeResources(R.color.colorPrimary)
         swipe_refresh.setOnRefreshListener {
             refreshFruits()
+        }
+    }
+
+    private fun getPermission(type: Int) {
+        val permissionList: MutableList<String> = ArrayList()
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.READ_PHONE_STATE)
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        }
+        if (permissionList.isNotEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionList.toTypedArray(), type)
+        } else {
+            getLocation(type)
+        }
+    }
+
+    @SuppressLint("BinaryOperationInTimber")
+    private fun getLocation(type: Int) {
+        when (type) {
+            NavigationType.TYPE_GAODE -> {
+                mAMapLocationClient = AMapLocationClient(this)
+                mAMapLocationClient?.startLocation()
+                mAMapLocationClient?.setLocationListener { ampLocation ->
+                    if (ampLocation != null) {
+                        if (ampLocation.errorCode == 0) {
+                            if (latitude == "") {
+                                latitude = "${ampLocation.latitude}"
+                                longitude = "${ampLocation.longitude}"
+                                Toast.makeText(this, "经度：$latitude, 纬度：$longitude", Toast.LENGTH_LONG).show()
+                            }
+                        } else {
+                            Timber.e("location error: ${ampLocation.errorCode}" +
+                                    "errInfo: ${ampLocation.errorInfo}")
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -148,7 +209,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        imageUri = FileProvider.getUriForFile(this, "com.qcloud.myapplication.FileProvider", outputImage)
+        imageUri = FileProvider.getUriForFile(this, "com.xwc.smokerapp.FileProvider", outputImage)
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
         startActivityForResult(intent, TAKE_PHOTO)
@@ -212,6 +273,17 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                     requestToSetting()
                 } else {
                     Toast.makeText(this, "请去设置中打开发送短信的权限，否则无法发送短信", Toast.LENGTH_LONG).show()
+                }
+            }
+            NavigationType.TYPE_GAODE -> {
+                if (grantResults.isNotEmpty()) {
+                    for (result in grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this, "权限被拒绝可能会影响用户体验", Toast.LENGTH_LONG).show()
+                            return
+                        }
+                    }
+                    getLocation(NavigationType.TYPE_GAODE)
                 }
             }
         }

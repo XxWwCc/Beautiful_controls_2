@@ -34,6 +34,8 @@ dependencies {
 
     //高德定位
     implementation 'com.amap.api:location:4.5.0'
+    //高德导航
+    implementation 'com.amap.api:navi-3dmap:6.6.0_3dmap6.7.0'
 
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'

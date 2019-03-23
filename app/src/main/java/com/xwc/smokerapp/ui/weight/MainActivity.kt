@@ -25,6 +25,11 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import com.amap.api.location.AMapLocationClient
+import com.amap.api.maps.model.LatLng
+import com.amap.api.maps.model.Poi
+import com.amap.api.navi.AmapNaviPage
+import com.amap.api.navi.AmapNaviParams
+import com.amap.api.navi.AmapNaviType
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
@@ -91,8 +96,12 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                 R.id.nav_contacts -> {
                     GetContactsActivity.openActivity(this)
                 }
-                R.id.nav_telephone -> {
-
+                R.id.nav_navigation -> {
+                    if (latitude != "" && longitude != "") {
+                        val start = Poi("我的位置", LatLng(latitude.toDouble(), longitude.toDouble()), "")
+                        val end = Poi("南方软件园", LatLng(22.372915, 113.574864), "")
+                        AmapNaviPage.getInstance().showRouteActivity(this, AmapNaviParams(start, null, end, AmapNaviType.DRIVER), Navigation())
+                    }
                 }
                 R.id.nav_time -> {
                     DialogTest.openActivity(this)

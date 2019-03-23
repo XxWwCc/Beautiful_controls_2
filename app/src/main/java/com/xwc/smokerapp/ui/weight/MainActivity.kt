@@ -21,6 +21,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.FileProvider
 import android.support.v4.view.GravityCompat
 import android.support.v7.widget.GridLayoutManager
+import android.view.Gravity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
@@ -36,10 +37,13 @@ import com.baidu.location.LocationClient
 import com.xwc.smokerapp.beans.FruitBean
 import com.xwc.smokerapp.R
 import com.xwc.smokerapp.base.BaseActivity
+import com.xwc.smokerapp.base.BasePopWindow
 import com.xwc.smokerapp.enums.NavigationType
 import com.xwc.smokerapp.ui.presenter.impl.MainPresenterImpl
 import com.xwc.smokerapp.ui.view.IMainView
+import com.xwc.smokerapp.utils.MapUtil
 import com.xwc.smokerapp.weight.CustomToolbar
+import com.xwc.smokerapp.weight.NavigationPop
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
@@ -56,6 +60,8 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
     private var mAdapter: FruitAdapter? = null
     private var longitude = ""
     private var latitude = ""
+
+    private var mNavigationPop: NavigationPop? = null
 
     private var mAMapLocationClient: AMapLocationClient? = null     // 高德定位
     private var mLocationClient: LocationClient? = null             // 百度定位
@@ -160,6 +166,12 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                         getLocation(NavigationType.TYPE_TENXUN)
                     }
                 }
+                -1 -> {
+                    if (mNavigationPop == null) {
+                        initPop()
+                    }
+                    mNavigationPop?.showAtLocation(custom_toolbar, Gravity.BOTTOM, 0, 0)
+                }
             }
         }
 
@@ -217,11 +229,43 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                             if (latitude == "") {
                                 latitude = "${location.latitude}"
                                 longitude = "${location.longitude}"
-                                Toast.makeText(this@MainActivity, "百度定位：经度：$latitude, 纬度：$longitude", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@MainActivity, "百度定位:经度:$latitude, 纬度:$longitude", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
                 })
+            }
+        }
+    }
+
+    // 初始化选择第三方导航弹窗
+    private fun initPop() {
+        mNavigationPop = NavigationPop(this)
+        mNavigationPop?.onPopWindowViewClick = object : BasePopWindow.OnPopWindowViewClick {
+            override fun onViewClick(view: View) {
+                when (view.id) {
+                    R.id.tv_baidu -> {
+                        if (MapUtil.isBaiduMapInstalled) {
+                            MapUtil.openBaiDuNavi(this@MainActivity, 0.0, 0.0, "我的位置", 22.372915, 113.574864, "南方软件园")
+                        } else {
+                            Toast.makeText(this@MainActivity, "您尚未安装百度地图", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    R.id.tv_gaode -> {
+                        if (MapUtil.isGdMapInstalled) {
+                            MapUtil.openGaoDeNavi(this@MainActivity, 0.0, 0.0, "我的位置", 22.372915, 113.574864, "南方软件园")
+                        } else {
+                            Toast.makeText(this@MainActivity, "您尚未安装高德地图", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    R.id.tv_tenxun -> {
+                        if (MapUtil.isTencentMapInstalled) {
+                            MapUtil.openTencentMap(this@MainActivity, 0.0, 0.0, "我的位置", 22.372915, 113.574864, "南方软件园")
+                        } else {
+                            Toast.makeText(this@MainActivity, "您尚未安装腾讯地图", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         }
     }

@@ -10,6 +10,11 @@
     <string name="btn_next" translatable="false">Next</string>
     <string name="btn_get_contacts" translatable="false">获取电话簿</string>
 
+    <string name="text_baidu" translatable="false">百度地图</string>
+    <string name="text_gaode" translatable="false">高德地图</string>
+    <string name="text_tenxun" translatable="false">腾讯地图</string>
+
+
     <string name="account" translatable="false">轮播图</string>
     <string name="phone" translatable="false">联系人</string>
     <string name="telephone" translatable="false">导航</string>

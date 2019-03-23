@@ -31,6 +31,12 @@ class MainModelImpl : IMainModel {
         bean.image = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553234943501&di=0852a85e01e7f4f642f04ea8a975d656&imgtype=0&src=http%3A%2F%2Fis3.mzstatic.com%2Fimage%2Fthumb%2FPurple3%2Fv4%2Fa0%2F96%2F33%2Fa09633fc-fbcd-3b60-1e6c-8630a8c44651%2Fmzl.vrgjacpe.jpg%2F0x0ss-30.jpg"
         list.add(bean)
 
+        bean = FruitBean()
+        bean.key = -1
+        bean.name = "第三方App导航"
+        bean.image = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1553339429179&di=1ab3f2fc6a18fe239faf4231a07d880d&imgtype=0&src=http%3A%2F%2Fimg.kuai8.com%2Fattaches%2Fintro%2F1213%2F201612131117517012.png"
+        list.add(bean)
+
         callback.onSuccess(list, "加载数据成功")
     }
 }

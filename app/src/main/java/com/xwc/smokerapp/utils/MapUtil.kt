@@ -3,7 +3,7 @@ package com.xwc.smokerapp.utils
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-
+import com.baidu.mapapi.model.LatLng
 import java.io.File
 
 /**
@@ -77,7 +77,7 @@ object MapUtil {
      *
      * 使用此方法需要下载导入百度地图的BaiduLBS_Android.jar包
      */
-/*    fun BD09ToGCJ02(latLng: LatLng): LatLng {
+    fun BD09ToGCJ02(latLng: LatLng): LatLng {
         val x_pi = 3.14159265358979324 * 3000.0 / 180.0
         val x = latLng.longitude - 0.0065
         val y = latLng.latitude - 0.006
@@ -86,7 +86,7 @@ object MapUtil {
         val gg_lat = z * Math.sin(theta)
         val gg_lng = z * Math.cos(theta)
         return LatLng(gg_lat, gg_lng)
-    }*/
+    }
 
     /**
      * 火星坐标系 (GCJ-02) 与百度坐标系 (BD-09) 的转换
@@ -97,7 +97,7 @@ object MapUtil {
      *
      * 需要百度地图的BaiduLBS_Android.jar包
      */
-/*    fun GCJ02ToBD09(latLng: LatLng): LatLng {
+    fun GCJ02ToBD09(latLng: LatLng): LatLng {
         val x_pi = 3.14159265358979324 * 3000.0 / 180.0
         val z = Math.sqrt(latLng.longitude * latLng.longitude + latLng.latitude * latLng.latitude) + 0.00002 * Math.sin(
             latLng.latitude * x_pi
@@ -106,7 +106,7 @@ object MapUtil {
         val bd_lat = z * Math.sin(theta) + 0.006
         val bd_lng = z * Math.cos(theta) + 0.0065
         return LatLng(bd_lat, bd_lng)
-    }*/
+    }
 
     /**
      * 打开高德地图导航功能

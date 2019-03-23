@@ -26,6 +26,9 @@ import android.widget.AdapterView
 import android.widget.Toast
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationListener
+import com.baidu.location.BDAbstractLocationListener
+import com.baidu.location.BDLocation
+import com.baidu.location.LocationClient
 import com.xwc.smokerapp.beans.FruitBean
 import com.xwc.smokerapp.R
 import com.xwc.smokerapp.base.BaseActivity
@@ -50,7 +53,8 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
     private var longitude = ""
     private var latitude = ""
 
-    private var mAMapLocationClient: AMapLocationClient? = null
+    private var mAMapLocationClient: AMapLocationClient? = null     // 高德定位
+    private var mLocationClient: LocationClient? = null             // 百度定位
 
     private val code = 1024
     private val TAKE_PHOTO = 1
@@ -122,6 +126,8 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
         mAdapter?.replaceList(fruits)
         mAdapter?.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val bean = mAdapter!!.mList[position]
+            latitude = ""
+            longitude = ""
             when (bean.key) {
                 0 -> {
                     TitleTestActivity.openActivity(this@MainActivity, bean.name, bean.image)
@@ -149,7 +155,6 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                 }
             }
         }
-
 
         swipe_refresh.setColorSchemeResources(R.color.colorPrimary)
         swipe_refresh.setOnRefreshListener {
@@ -187,7 +192,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                             if (latitude == "") {
                                 latitude = "${ampLocation.latitude}"
                                 longitude = "${ampLocation.longitude}"
-                                Toast.makeText(this, "经度：$latitude, 纬度：$longitude", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "高德定位：经度：$latitude, 纬度：$longitude", Toast.LENGTH_LONG).show()
                             }
                         } else {
                             Timber.e("location error: ${ampLocation.errorCode}" +
@@ -195,6 +200,21 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                         }
                     }
                 }
+            }
+            NavigationType.TYPE_BAIDU -> {
+                mLocationClient = LocationClient(this)
+                mLocationClient?.start()
+                mLocationClient?.registerLocationListener(object : BDAbstractLocationListener() {
+                    override fun onReceiveLocation(location: BDLocation?) {
+                        if (location != null) {
+                            if (latitude == "") {
+                                latitude = "${location.latitude}"
+                                longitude = "${location.longitude}"
+                                Toast.makeText(this@MainActivity, "百度定位：经度：$latitude, 纬度：$longitude", Toast.LENGTH_LONG).show()
+                            }
+                        }
+                    }
+                })
             }
         }
     }
@@ -374,6 +394,15 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                 Timber.e(message)
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mAMapLocationClient?.stopLocation()
+        mAMapLocationClient?.onDestroy()
+        mAMapLocationClient = null
+        mLocationClient?.stop()
+        mLocationClient = null
     }
 
     companion object {

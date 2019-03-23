@@ -48,6 +48,15 @@
         <meta-data android:name="com.amap.api.v2.apikey"
                    android:value="1ee9ec683707f0f1ff454373c693f4c4"/>
 
+        <!--百度-->
+        <service android:name="com.baidu.location.f" android:enabled="true"
+                 android:process=":remote"/>
+
+        <!--百度key-->
+        <meta-data
+                android:name="com.baidu.lbsapi.API_KEY"
+                android:value="W2akKLUUUrvEej82D1uGGIdpjpcyUtTG"/>
+
         <activity android:name="com.xwc.smokerapp.ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

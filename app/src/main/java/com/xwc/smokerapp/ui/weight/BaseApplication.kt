@@ -1,4 +1,4 @@
-package com.xwc.smokerapp.ui.activity
+package com.xwc.smokerapp.ui.weight
 
 import android.app.Application
 import com.xwc.smokerapp.enums.NetEnum

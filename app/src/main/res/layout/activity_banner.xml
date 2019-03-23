@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:toolbar="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.activity.BannerTestActivity">
+    tools:context=".ui.weight.BannerTestActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

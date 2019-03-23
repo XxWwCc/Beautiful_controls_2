@@ -6,7 +6,7 @@
     xmlns:toolbar="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".ui.activity.DialogTest">
+    tools:context=".ui.weight.DialogTest">
 
     <com.xwc.smokerapp.weight.CustomToolbar
         android:layout_width="match_parent"

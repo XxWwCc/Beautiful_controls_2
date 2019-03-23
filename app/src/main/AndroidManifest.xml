@@ -33,7 +33,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
 
     <application
-        android:name="com.xwc.smokerapp.ui.activity.BaseApplication"
+        android:name="com.xwc.smokerapp.ui.weight.BaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -48,16 +48,16 @@
         <meta-data android:name="com.amap.api.v2.apikey"
                    android:value="1ee9ec683707f0f1ff454373c693f4c4"/>
 
-        <!--百度-->
-        <service android:name="com.baidu.location.f" android:enabled="true"
-                 android:process=":remote"/>
-
         <!--百度key-->
         <meta-data
                 android:name="com.baidu.lbsapi.API_KEY"
                 android:value="W2akKLUUUrvEej82D1uGGIdpjpcyUtTG"/>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.MainActivity">
+        <!--百度-->
+        <service android:name="com.baidu.location.f" android:enabled="true"
+                 android:process=":remote"/>
+
+        <activity android:name="com.xwc.smokerapp.ui.weight.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -75,19 +75,19 @@
                 android:resource="@xml/file_paths"/>
         </provider>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.TitleTestActivity"
+        <activity android:name="com.xwc.smokerapp.ui.weight.TitleTestActivity"
                   android:theme="@style/TitleActivityTheme"/>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.BannerTestActivity"
+        <activity android:name="com.xwc.smokerapp.ui.weight.BannerTestActivity"
             android:label="@string/title_banner"/>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.WebViewActivity"
+        <activity android:name="com.xwc.smokerapp.ui.weight.WebViewActivity"
             android:label="@string/title_search"/>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.DialogTest"
+        <activity android:name="com.xwc.smokerapp.ui.weight.DialogTest"
             android:label="@string/title_animation"/>
 
-        <activity android:name="com.xwc.smokerapp.ui.activity.GetContactsActivity"
+        <activity android:name="com.xwc.smokerapp.ui.weight.GetContactsActivity"
             android:label="@string/title_get_contacts"/>
     </application>
 

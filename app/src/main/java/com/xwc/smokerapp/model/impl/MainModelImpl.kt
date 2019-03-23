@@ -14,7 +14,7 @@ class MainModelImpl : IMainModel {
     override fun getFruitList(callback: DataCallback<List<FruitBean>>) {
         val list: MutableList<FruitBean> = ArrayList()
         var bean = FruitBean()
-        bean.key = NavigationType.TYPE_GAODE
+        bean.key = NavigationType.TYPE_BAIDU
         bean.name = NavigationType.getName(NavigationType.TYPE_BAIDU)
         bean.image = "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=754965178,1416923748&fm=26&gp=0.jpg"
         list.add(bean)

@@ -1,4 +1,4 @@
-package com.xwc.smokerapp.ui.activity
+package com.xwc.smokerapp.ui.weight
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -25,7 +25,6 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.Toast
 import com.amap.api.location.AMapLocationClient
-import com.amap.api.location.AMapLocationListener
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
@@ -127,7 +126,6 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
         mAdapter?.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
             val bean = mAdapter!!.mList[position]
             latitude = ""
-            longitude = ""
             when (bean.key) {
                 0 -> {
                     TitleTestActivity.openActivity(this@MainActivity, bean.name, bean.image)
@@ -304,6 +302,17 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                         }
                     }
                     getLocation(NavigationType.TYPE_GAODE)
+                }
+            }
+            NavigationType.TYPE_BAIDU -> {
+                if (grantResults.isNotEmpty()) {
+                    for (result in grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            Toast.makeText(this, "权限被拒绝可能会影响用户体验", Toast.LENGTH_LONG).show()
+                            return
+                        }
+                    }
+                    getLocation(NavigationType.TYPE_BAIDU)
                 }
             }
         }

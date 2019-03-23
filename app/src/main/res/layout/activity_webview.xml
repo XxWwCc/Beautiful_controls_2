@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.activity.WebViewActivity">
+    tools:context=".ui.weight.WebViewActivity">
 
     <com.github.lzyzsd.jsbridge.BridgeWebView
         android:id="@+id/web_view"

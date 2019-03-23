@@ -1,4 +1,4 @@
-package com.xwc.smokerapp.ui.activity
+package com.xwc.smokerapp.ui.weight
 
 import android.content.Context
 import android.content.Intent

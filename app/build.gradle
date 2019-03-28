@@ -13,11 +13,34 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
+        ndk {
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+        }
+
+        manifestPlaceholders = [
+                JPUSH_PKGNAME : applicationId,
+                JPUSH_APPKEY : "ab7b818bceab5bb86395405c",
+                JPUSH_CHANNEL : "developer-default"
+        ]
+
     }
+
+    signingConfigs {
+        config {
+            storeFile file(KEY_PATH)
+            storePassword KEY_PASS
+            keyAlias ALIAS_NAME
+            keyPassword ALIAS_PASS
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     sourceSets {
@@ -28,6 +51,13 @@ android {
 }
 
 dependencies {
+
+    // 极光推送
+    implementation 'cn.jiguang.sdk:jpush:3.2.0'
+    implementation 'cn.jiguang.sdk:jcore:1.2.7'
+
+    // 解决Android 5.0以下的方法超限
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
     implementation 'com.google.code.gson:gson:2.8.5'

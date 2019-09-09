@@ -34,6 +34,7 @@ import com.amap.api.navi.AmapNaviType
 import com.baidu.location.BDAbstractLocationListener
 import com.baidu.location.BDLocation
 import com.baidu.location.LocationClient
+import com.baidu.location.LocationClientOption
 import com.xwc.smokerapp.beans.FruitBean
 import com.xwc.smokerapp.R
 import com.xwc.smokerapp.base.BaseActivity
@@ -222,6 +223,9 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
             }
             NavigationType.TYPE_BAIDU -> {
                 mLocationClient = LocationClient(this)
+                var option = LocationClientOption()
+                option.setIsNeedAddress(true)
+                mLocationClient?.locOption = option
                 mLocationClient?.start()
                 mLocationClient?.registerLocationListener(object : BDAbstractLocationListener() {
                     override fun onReceiveLocation(location: BDLocation?) {
@@ -229,7 +233,7 @@ class MainActivity : BaseActivity<IMainView, MainPresenterImpl>(), IMainView {
                             if (latitude == "") {
                                 latitude = "${location.latitude}"
                                 longitude = "${location.longitude}"
-                                Toast.makeText(this@MainActivity, "百度定位:经度:$latitude, 纬度:$longitude", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this@MainActivity, "百度定位:城市：${location.city}, 经度:$latitude, 纬度:$longitude", Toast.LENGTH_LONG).show()
                             }
                         }
                     }
